@@ -6,10 +6,10 @@ export default function Sobre() {
       <Header
         title="Sobre o Sistema"
         breadcrumb={["Home", "Sobre"]}
-        userName="João Silva"
       />
 
-      <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-5xl mx-auto">
+      <div className="page-body">
+        <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-5xl mx-auto">
         
         <section className="rounded-2xl border border-[#c8cec8] bg-[#f8faf8] p-6 sm:p-8 shadow-sm">
           <h2 className="text-2xl font-bold text-[#1f2320] mb-4">
@@ -17,7 +17,7 @@ export default function Sobre() {
           </h2>
           <div className="space-y-4 text-[15px] leading-relaxed text-[#4f584d]">
             <p>
-              O <strong>DashControle</strong> é uma plataforma logística desenvolvida com foco no rastreamento e
+              O <strong>TrackIt</strong> é uma plataforma logística desenvolvida com foco no rastreamento e
               certificação de entregas utilizando uma abordagem inovadora: a integração com{" "}
               <strong className="text-[#3e523a]">maquininhas POS (Point of Sale)</strong>.
             </p>
@@ -60,6 +60,7 @@ export default function Sobre() {
           </section>
         </div>
 
+        </div>
       </div>
     </>
   );

@@ -22,13 +22,14 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { authService } from "@/services/auth.service";
 
 interface HeaderProps {
   title: string;
   breadcrumb?: string[];
   actions?: React.ReactNode;
-  userName?: string;
   userAvatar?: string;
 }
 
@@ -36,11 +37,16 @@ export function Header({
   title,
   breadcrumb,
   actions,
-  userName = "Usuário",
   userAvatar,
 }: HeaderProps) {
   // Estado que controla a abertura do menu dropdown do avatar
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userName, setUserName] = useState("Carregando...");
+
+  useEffect(() => {
+    const user = authService.getUser();
+    setUserName(user?.nome || "Visitante");
+  }, []);
 
   // Gera as iniciais do usuário para o avatar fallback (ex: "João Silva" → "JS")
   const initials = userName
@@ -51,7 +57,7 @@ export function Header({
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 bg-[rgba(246,247,245,0.9)] backdrop-blur-sm border-b border-[#c8cec8] rounded-t-[18px]">
+    <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 bg-[rgba(246,247,245,0.9)] backdrop-blur-sm border-b border-[#c8cec8] rounded-t-xl">
 
       {/* ── Lado esquerdo: título e breadcrumb ────────────── */}
       <div className="flex flex-col justify-center">
@@ -142,22 +148,30 @@ export function Header({
                 </div>
 
                 {/* Itens do menu */}
-                {[
-                  { label: "Perfil", icon: "👤" },
-                  { label: "Configurações", icon: "⚙️" },
-                ].map((item) => (
-                  <button
-                    key={item.label}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#566053] hover:bg-[#e7ece7] hover:text-[#1f2320] transition-colors text-left"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <span>{item.icon}</span>
-                    {item.label}
-                  </button>
-                ))}
+                <Link
+                  href="/perfil"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#566053] hover:bg-[#e7ece7] hover:text-[#1f2320] transition-colors text-left"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span>👤</span> Perfil
+                </Link>
+                <Link
+                  href="/configuracoes"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#566053] hover:bg-[#e7ece7] hover:text-[#1f2320] transition-colors text-left"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span>⚙️</span> Configurações
+                </Link>
 
                 <div className="border-t border-[#d8ddd8] mt-1 pt-1">
-                  <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 hover:text-red-600 transition-colors text-left">
+                  <button
+                    onClick={() => {
+                      authService.logout();
+                      setIsMenuOpen(false);
+                      window.location.href = "/login";
+                    }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 hover:text-red-600 transition-colors text-left"
+                  >
                     <span>🚪</span>
                     Sair
                   </button>

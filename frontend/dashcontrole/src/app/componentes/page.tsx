@@ -12,10 +12,17 @@ import { Header } from "../components/Header";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { Card } from "../components/Card";
+import { MapPin, MapRoute } from "../components";
 
 export default function ComponentesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  // Coordenadas mockadas para teste visual dos componentes de mapa
+  // Origem: Avenida Paulista (SP)
+  const mockOrigin = { lat: -23.561684, lng: -46.656139 };
+  // Destino: Praça da Sé (SP)
+  const mockDestination = { lat: -23.55031, lng: -46.63398 };
 
   return (
     <>
@@ -23,7 +30,6 @@ export default function ComponentesPage() {
       <Header
         title="Componentes"
         breadcrumb={["Home", "Componentes"]}
-        userName="Dev"
         actions={
           <Button size="sm" variant="outline">
             Ver código-fonte
@@ -31,7 +37,8 @@ export default function ComponentesPage() {
         }
       />
 
-      <div className="p-6 space-y-10 max-w-5xl">
+      <div className="page-body">
+        <div className="p-6 space-y-10 max-w-5xl">
 
         {/* ── SEÇÃO: Cards de Métricas ──────────────────────── */}
         <section>
@@ -137,6 +144,44 @@ export default function ComponentesPage() {
           </Card>
         </section>
 
+        {/* ── SEÇÃO: Mapas (Google Maps Embed) ─────────────── */}
+        <section>
+          <SectionTitle number="05" title="Mapas" subtitle="MapPin e MapRoute com dados mockados" />
+
+          <Card className="mb-4">
+            <Card.Header
+              title="MapPin"
+              subtitle="Aponta um local específico com base em latitude e longitude"
+            />
+            <Card.Body>
+              <MapPin
+                lat={mockDestination.lat}
+                lng={mockDestination.lng}
+                height={360}
+                label="Entrega selecionada (mock)"
+                zoom={16}
+              />
+            </Card.Body>
+          </Card>
+
+          <Card>
+            <Card.Header
+              title="MapRoute"
+              subtitle="Traça rota entre origem e destino com modo de viagem"
+            />
+            <Card.Body>
+              <MapRoute
+                origin={mockOrigin}
+                destination={mockDestination}
+                height={420}
+                label="Rota de entrega (mock)"
+                travelMode="driving"
+              />
+            </Card.Body>
+          </Card>
+        </section>
+
+        </div>
       </div>
 
       {/* ── Modal de Formulário ───────────────────────────────── */}
@@ -210,11 +255,11 @@ export default function ComponentesPage() {
 function SectionTitle({ number, title, subtitle }: { number: string; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-3 mb-4">
-      <span className="text-xs font-mono text-violet-400 bg-violet-600/10 border border-violet-600/20 px-2 py-0.5 rounded-md">
+      <span className="text-xs font-mono text-[#4f654b] bg-[#4f654b]/10 border border-[#4f654b]/20 px-2 py-0.5 rounded-md">
         {number}
       </span>
       <div>
-        <h2 className="text-white font-semibold text-base leading-none">{title}</h2>
+        <h2 className="text-[#1f2320] font-semibold text-base leading-none">{title}</h2>
         <p className="text-zinc-500 text-xs mt-0.5">{subtitle}</p>
       </div>
     </div>

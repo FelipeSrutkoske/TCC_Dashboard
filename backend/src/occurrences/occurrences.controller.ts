@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { OccurrencesService } from './occurrences.service';
-import { CreateOccurrenceDto } from './dto/create-occurrence.dto';
-import { UpdateOccurrenceDto } from './dto/update-occurrence.dto';
+import { Occurrence } from './entities/occurrence.entity';
 
 @Controller('occurrences')
 export class OccurrencesController {
   constructor(private readonly occurrencesService: OccurrencesService) {}
 
   @Post()
-  create(@Body() createOccurrenceDto: CreateOccurrenceDto) {
-    return this.occurrencesService.create(createOccurrenceDto);
+  create(@Body() body: Partial<Occurrence>) {
+    return this.occurrencesService.create(body);
   }
 
   @Get()
@@ -23,8 +22,8 @@ export class OccurrencesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOccurrenceDto: UpdateOccurrenceDto) {
-    return this.occurrencesService.update(+id, updateOccurrenceDto);
+  update(@Param('id') id: string, @Body() body: Partial<Occurrence>) {
+    return this.occurrencesService.update(+id, body);
   }
 
   @Delete(':id')

@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { FinalizationsService } from './finalizations.service';
-import { CreateFinalizationDto } from './dto/create-finalization.dto';
-import { UpdateFinalizationDto } from './dto/update-finalization.dto';
+import { Finalization } from './entities/finalization.entity';
 
 @Controller('finalizations')
 export class FinalizationsController {
   constructor(private readonly finalizationsService: FinalizationsService) {}
 
   @Post()
-  create(@Body() createFinalizationDto: CreateFinalizationDto) {
-    return this.finalizationsService.create(createFinalizationDto);
+  create(@Body() body: Partial<Finalization>) {
+    return this.finalizationsService.create(body);
   }
 
   @Get()
@@ -23,8 +22,8 @@ export class FinalizationsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFinalizationDto: UpdateFinalizationDto) {
-    return this.finalizationsService.update(+id, updateFinalizationDto);
+  update(@Param('id') id: string, @Body() body: Partial<Finalization>) {
+    return this.finalizationsService.update(+id, body);
   }
 
   @Delete(':id')

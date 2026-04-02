@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* ── Design Tokens ─────────────────────────────────────────── */
 :root {
   --background: #e8ebe8;
   --foreground: #1f2320;
@@ -9,6 +10,13 @@
   --border: #c8cec8;
   --primary: #4f654b;
   --primary-strong: #3e523a;
+
+  /* Scrollbar tokens */
+  --scrollbar-width: 6px;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: #b8c4b6;
+  --scrollbar-thumb-hover: #7a9163;
+  --scrollbar-radius: 999px;
 }
 
 @theme inline {
@@ -23,6 +31,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ── Body & Background ─────────────────────────────────────── */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -33,16 +42,75 @@ body {
     linear-gradient(135deg, #eef1ee 0%, #dde3dd 100%);
 }
 
-/* Container padrão para todas as rotas do app */
+/* ── Route Frame (moldura branca arredondada) ─────────────── */
+/* É um flex-column: Header (sticky) + page-body (scroll) */
 .route-frame {
   background: linear-gradient(160deg, var(--surface) 0%, var(--surface-2) 100%);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 12px; /* 12px = standard xl radius */
   box-shadow:
     0 12px 30px rgba(24, 29, 24, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* essencial para flex-child não vazar */
+  overflow: hidden; /* mantém o border-radius nas bordas */
 }
 
+/* ── Page Body (área de conteúdo com scroll) ──────────────── */
+/*
+  Classe que CADA PÁGINA deve usar para envolver seu conteúdo.
+  O scroll fica aqui, não no .route-frame.
+  Uso: <div className="page-body"> ... </div>
+*/
+.page-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* ── Scrollbar customizada (WebKit: Chrome, Safari, Edge) ─── */
+.page-body::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+.page-body::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  margin-top: 12px;
+  margin-bottom: 12px;
+  border-radius: var(--scrollbar-radius);
+}
+
+.page-body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--scrollbar-radius);
+  transition: background 0.2s ease;
+}
+
+.page-body::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.page-body::-webkit-scrollbar-thumb:active {
+  background: var(--primary-strong);
+}
+
+/* Efeito: scrollbar aparece só ao scrollar (fade in/out) */
+.page-body::-webkit-scrollbar-thumb {
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.2s ease;
+}
+
+.page-body:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+/* ── Sidebar offset ───────────────────────────────────────── */
 .with-sidebar-offset {
   padding-left: 0;
 }

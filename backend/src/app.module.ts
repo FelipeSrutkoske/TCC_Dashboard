@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { DeliveriesModule } from './deliveries/deliveries.module';
 import { OccurrencesModule } from './occurrences/occurrences.module';
 import { FinalizationsModule } from './finalizations/finalizations.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,12 +21,13 @@ import { FinalizationsModule } from './finalizations/finalizations.module';
       database: process.env.DB_DATABASE,
       entities: [],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: false, // desativado para não apagar dados existentes
     }),
     UsersModule,
     DeliveriesModule,
     OccurrencesModule,
     FinalizationsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

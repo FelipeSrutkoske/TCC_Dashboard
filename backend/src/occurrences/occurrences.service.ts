@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateOccurrenceDto } from './dto/create-occurrence.dto';
-import { UpdateOccurrenceDto } from './dto/update-occurrence.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Occurrence } from './entities/occurrence.entity';
 
 @Injectable()
 export class OccurrencesService {
-  create(createOccurrenceDto: CreateOccurrenceDto) {
-    return 'This action adds a new occurrence';
+  constructor(
+    @InjectRepository(Occurrence)
+    private readonly occurrencesRepository: Repository<Occurrence>,
+  ) {}
+
+  create(data: Partial<Occurrence>): Promise<Occurrence> {
+    const occurrence = this.occurrencesRepository.create(data);
+    return this.occurrencesRepository.save(occurrence);
   }
 
-  findAll() {
-    return `This action returns all occurrences`;
+  findAll(): Promise<Occurrence[]> {
+    return this.occurrencesRepository.find({
+      relations: ['delivery'],
+      order: { dataHora: 'DESC' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} occurrence`;
+  async findOne(id: number): Promise<Occurrence> {
+    const occurrence = await this.occurrencesRepository.findOne({
+      where: { id },
+      relations: ['delivery'],
+    });
+    if (!occurrence) throw new NotFoundException(`Ocorrência #${id} não encontrada`);
+    return occurrence;
   }
 
-  update(id: number, updateOccurrenceDto: UpdateOccurrenceDto) {
-    return `This action updates a #${id} occurrence`;
+  async update(id: number, data: Partial<Occurrence>): Promise<Occurrence> {
+    const occurrence = await this.findOne(id);
+    Object.assign(occurrence, data);
+    return this.occurrencesRepository.save(occurrence);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} occurrence`;
+  async remove(id: number): Promise<void> {
+    const occurrence = await this.findOne(id);
+    await this.occurrencesRepository.remove(occurrence);
   }
 }

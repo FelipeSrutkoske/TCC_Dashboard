@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
-import { CreateFinalizationDto } from './dto/create-finalization.dto';
-import { UpdateFinalizationDto } from './dto/update-finalization.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Finalization } from './entities/finalization.entity';
 
 @Injectable()
 export class FinalizationsService {
-  create(createFinalizationDto: CreateFinalizationDto) {
-    return 'This action adds a new finalization';
+  constructor(
+    @InjectRepository(Finalization)
+    private readonly finalizationsRepository: Repository<Finalization>,
+  ) {}
+
+  create(data: Partial<Finalization>): Promise<Finalization> {
+    const finalization = this.finalizationsRepository.create(data);
+    return this.finalizationsRepository.save(finalization);
   }
 
-  findAll() {
-    return `This action returns all finalizations`;
+  findAll(): Promise<Finalization[]> {
+    return this.finalizationsRepository.find({
+      relations: ['delivery'],
+      order: { finalizedAt: 'DESC' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} finalization`;
+  async findOne(id: number): Promise<Finalization> {
+    const finalization = await this.finalizationsRepository.findOne({
+      where: { id },
+      relations: ['delivery'],
+    });
+    if (!finalization)
+      throw new NotFoundException(`Finalização #${id} não encontrada`);
+    return finalization;
   }
 
-  update(id: number, updateFinalizationDto: UpdateFinalizationDto) {
-    return `This action updates a #${id} finalization`;
+  async update(id: number, data: Partial<Finalization>): Promise<Finalization> {
+    const finalization = await this.findOne(id);
+    Object.assign(finalization, data);
+    return this.finalizationsRepository.save(finalization);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} finalization`;
+  async remove(id: number): Promise<void> {
+    const finalization = await this.findOne(id);
+    await this.finalizationsRepository.remove(finalization);
   }
 }
