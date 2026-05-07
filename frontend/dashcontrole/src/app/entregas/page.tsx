@@ -153,7 +153,7 @@ export default function EntregasPage() {
         {entregaSelecionada && (
           <div className="space-y-4">
             <div className="rounded-xl bg-zinc-800/50 p-4 border border-zinc-700">
-               <p className="text-[10px] uppercase text-zinc-500 font-bold mb-1">📍 Endereço de Destino</p>
+               <p className="text-[10px] uppercase text-zinc-500 font-bold mb-1">Endereço de Destino</p>
                <p className="text-white text-sm">{entregaSelecionada.destinationAddress}</p>
             </div>
             <div className="rounded-xl bg-zinc-800/50 p-4 border border-zinc-700 flex justify-between items-center">

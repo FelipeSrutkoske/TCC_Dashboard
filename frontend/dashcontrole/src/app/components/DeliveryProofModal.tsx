@@ -53,7 +53,7 @@ function EmbedMap({ lat, lng, address }: { lat: number; lng: number; address: st
         title={`Localização: ${address}`}
       />
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 pt-8">
-        <p className="text-white text-sm font-medium truncate">📍 {address}</p>
+        <p className="text-white text-sm font-medium truncate">{address}</p>
         <p className="text-zinc-300 text-[11px]">{lat.toFixed(6)}, {lng.toFixed(6)}</p>
       </div>
     </div>

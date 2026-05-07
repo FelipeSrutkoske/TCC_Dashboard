@@ -153,7 +153,7 @@ export function Header({
                   className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#566053] hover:bg-[#e7ece7] hover:text-[#1f2320] transition-colors text-left"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <span>👤</span> Perfil
+                  <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> Perfil
                 </Link>
                 <Link
                   href="/configuracoes"
@@ -172,7 +172,7 @@ export function Header({
                     }}
                     className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 hover:text-red-600 transition-colors text-left"
                   >
-                    <span>🚪</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                     Sair
                   </button>
                 </div>

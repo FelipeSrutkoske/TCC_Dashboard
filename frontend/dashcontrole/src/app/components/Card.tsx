@@ -15,7 +15,7 @@
 //     value="R$ 12.500"
 //     trend="+8.2%"
 //     trendUp={true}
-//     icon={<span>💰</span>}
+//     icon={<Icon />}
 //   />
 //
 // Como usar — Card com cabeçalho:

@@ -44,10 +44,10 @@ export default function ComponentesPage() {
         <section>
           <SectionTitle number="01" title="Card.Stat" subtitle="Cards de métricas para dashboards" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card.Stat label="Receita Total"   value="R$ 12.500" trend="+8.2%"  trendUp={true}  icon="💰" />
-            <Card.Stat label="Despesas"        value="R$ 4.320"  trend="+2.1%"  trendUp={false} icon="📉" />
-            <Card.Stat label="Saldo"           value="R$ 8.180"  trend="+14.3%" trendUp={true}  icon="🏦" />
-            <Card.Stat label="Transações"      value="47"        trend="+5"     trendUp={true}  icon="🔄" />
+            <Card.Stat label="Receita Total"   value="R$ 12.500" trend="+8.2%"  trendUp={true}  />
+            <Card.Stat label="Despesas"        value="R$ 4.320"  trend="+2.1%"  trendUp={false} />
+            <Card.Stat label="Saldo"           value="R$ 8.180"  trend="+14.3%" trendUp={true}  />
+            <Card.Stat label="Transações"      value="47"        trend="+5"     trendUp={true}  />
           </div>
         </section>
 
@@ -103,7 +103,7 @@ export default function ComponentesPage() {
                 <Button loading>Carregando...</Button>
                 <Button disabled>Desabilitado</Button>
                 <Button
-                  leftIcon={<span>✨</span>}
+                  leftIcon={<svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>}
                   rightIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                       <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
