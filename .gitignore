@@ -69,6 +69,8 @@ env/
 *.tsbuildinfo
 next-env.d.ts
 
+mobile/REQUIREMENTS.md
+
 # backend
 backend/.env
 backend/node_modules
